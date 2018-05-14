@@ -381,18 +381,45 @@ public class WMethod{
      Vector <String> tests=generateTests(transitionCover, w); // Generate tests.
      Utilities.printAllTestCases(tests); // Print tests.
      
+     //Task 1
      for(String characters : tests)
      {
-    	 String space = "";
+    	 	String space = "";
     	 
-    	 for(int i = 0; i < characters.length(); i++) 
-    	 {
-    		 space = space + characters.charAt(i);
-    		 if(i != characters.length() - 1)
-    			 space = space + " ";
-    	 }
+    	 	for(int i = 0; i < characters.length(); i++) 
+    	 	{
+    	 		space = space + characters.charAt(i);
+    	 		if(i != characters.length() - 1)
+    	 			space = space + " ";
+    	 	}
     	 
-    	 Utilities.runFSM(FSM, 1, space, " ");
+    	 	Utilities.runFSM(FSM, 1, space, " ");
+     }
+     
+     //Task 3
+     for(int i = 0; i < tests.size(); i++)
+     {
+    	 	System.out.println("@Test");
+    	 	System.out.println("public void testCase" + i + "() \n{");
+    	 	
+    	 	String test = tests.elementAt(i);
+    	 	String store = "";
+    	 	
+    	 	for(int j = 0; j< test.length(); j++)
+    	 	{
+    	 		store = store + test.charAt(j);
+    	 		if(j != test.length() - 1)
+    	 			store = store + " ";
+    	 	}
+    	 	
+    	 	String outputPattern = Utilities.runFSMBond(FSM, 1, store, " ");
+    	 	
+    	 	if(outputPattern.contains("yes"))
+    	 		System.out.println("assertTrue(" + "\"" + tests.elementAt(i) + "\"" + ".matches(pattern));");
+    	 	else
+    	 		System.out.println("assertFalse(" + "\"" + tests.elementAt(i) + "\"" + ".matches(pattern));");
+    	 	
+    	 	System.out.println("}");
      }
      // TODO: 	Write the necessary code to iterate through all test cases and run them against
      // 		the FSM using the Utilities.runFSM() method. 
